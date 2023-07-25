@@ -22,16 +22,16 @@ public class Main {
 				max = strSet[i].length;
 			}
 		}
-		String result = "";
+//		String result = "";
 		// 반복
 		for (int i = 0; i < max; i ++) {
 			for (int j = 0; j < 5; j++) {
 				if (i >= strSet[j].length) {
 					continue;
 				}
-				result += "" + strSet[j][i];
+				System.out.print(strSet[j][i]);
 			}
 		}
-		System.out.println(result);
+//		System.out.println(result);
 	}
 }
