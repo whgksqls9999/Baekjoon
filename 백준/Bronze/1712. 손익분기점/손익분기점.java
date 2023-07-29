@@ -14,8 +14,7 @@ public class Main {
 		long A = Integer.parseInt(st.nextToken());
 		long B = Integer.parseInt(st.nextToken());
 		long C = Integer.parseInt(st.nextToken());
-		long i = 0;
-		
+		long i = A/C;
 		if(B >= C) {
 			bw.write(""+-1);
 			bw.flush();
@@ -24,6 +23,7 @@ public class Main {
 
 		
 		while(true) {
+
 			if (sell(C,i) > use(A,B,i)) {
 				bw.write(""+i);
 				bw.flush();
