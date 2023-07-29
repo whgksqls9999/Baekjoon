@@ -20,22 +20,7 @@ public class Main {
 			bw.flush();
 			return;
 		}
-
-		
-		while(true) {
-
-			if (sell(C,i) > use(A,B,i)) {
-				bw.write(""+i);
-				bw.flush();
-				return;
-			}
-			i++;
-		}
-	}
-	static long use(long A, long B, long i) {
-		return A + B * i;
-	}
-	static long sell(long C, long i) {
-		return C * i;
+		bw.write(""+(A/(C-B)+1));
+		bw.flush();
 	}
 }
