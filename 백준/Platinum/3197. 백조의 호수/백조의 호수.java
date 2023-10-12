@@ -9,13 +9,10 @@ import java.util.StringTokenizer;
 public class Main {
 	static int[] dr = { -1, 0, 1, 0 };
 	static int[] dc = { 0, 1, 0, -1 };
-	static int R;
-	static int C;
+	static int R, C, days;
 	static char[][] map;
 	static int[][][] visited;
-	static int[] Pos; // 백조 1
-	static int[] Pos2; // 백조 2
-	static int days;
+	static int[] Pos, Pos2; // 백조 1, 백조 2
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -47,9 +44,6 @@ public class Main {
 		int[] melt = new int[2];
 		for (int i = 0; i < R; i++) {
 			search: for (int j = 0; j < C; j++) {
-//				if (visited[i][j] == null) {
-//					visited[i][j] = new int[] { i, j };
-//				}
 				if (map[i][j] == 'X') {
 					for (int k = 0; k < dr.length; k++) {
 						nr = i + dr[k];
@@ -62,37 +56,43 @@ public class Main {
 				}
 			}
 		} // 녹일 빙하 기억하는 queue에 넣어주는 for문
-			// 새로운 빙하가 녹을 때 마다, 새 빙하를 대표노드로 만들어 대표 노드를 계속 변경하기
+
+		// 새로운 빙하가 녹을 때 마다, 새 빙하를 대표노드로 만들어 대표 노드를 계속 변경하기
 		int idx = 0;
 		BFS(Pos[0], Pos[1]);
 		BFS(Pos2[0], Pos2[1]);
-		// BFS를 통해 초기 union시키기 완료.
-//		for (int i = 0; i < visited.length; i++) {
-//			for (int j = 0; j < visited[i].length; j++) {
-//				System.out.print(Arrays.toString(visited[i][j]));
-//			}
-//			System.out.println();
-//		}
-//		while (days < 15) {
-//		System.out.println(Arrays.toString(find(Pos)));
-//		System.out.println(Arrays.toString(find(Pos2)));
+
 		while (!checkSame(find(Pos), find(Pos2))) {
 			// 1. 검사하고
 			// 2. 녹이고
 			++days; // 하루가 간다,,
 			int qSize = queue.size();
 			for (int i = 0; i < qSize; i++) { // 큐에서 녹일 것들을 꺼낸다. => 다음 녹일걸 정해두고 => 전에 정해둔걸 녹인다
+
+				// 큐에서 녹일 빙하를 꺼낸다
 				int[] now = queue.poll(); // 녹일 것 꺼내기
+
+				// 이미 녹아있는 빙하는 넘긴다
 				if (map[now[0]][now[1]] == '.')
-					continue; // 중복된 것들 넘기기
+					continue;
+
+				// 녹인다
 				map[now[0]][now[1]] = '.'; // 녹이기
+
+				// 녹은 빙하의 위치에서 사방을 탐색한다
 				for (int j = 0; j < dr.length; j++) {
 					nr = now[0] + dr[j];
 					nc = now[1] + dc[j];
 					if (nr >= 0 && nc >= 0 && nr < R && nc < C) {
+
+						// 녹은 빙하의 위치 근처에서 다른 빙하를 만났다면
 						if (map[nr][nc] == 'X') {
+
+							// 큐에 해당 빙하를 넣어 다음날에 녹을 것이라는 것을 표시해준다
 							queue.add(new int[] { nr, nc });
-						} // 다음에 녹일 빙하를 큐에 넣어준다.
+						}
+
+						// 녹은 빙하의 위치 근처에 빙하가 아니라 물이나 백조를 만났다면 (백조도 물위에 떠있어서 사실상 물이다)
 						else if (map[nr][nc] == '.' || map[nr][nc] == 'L') {
 							if (visited[nr][nc] == null) {
 								visited[nr][nc] = new int[] { nr, nc };
@@ -105,16 +105,6 @@ public class Main {
 					}
 				} // 녹은 곳 주변을 탐색, 땅은 다음 녹이는 큐로, 물은 유니온
 			} // 큐에서 녹은거 꺼내서 녹이는 for문
-//			System.out.println("시작");
-//			for (char[] i : map) {
-//				System.out.println(Arrays.toString(i));
-//			}
-//			for (int i = 0; i < visited.length; i++) {
-//				for (int j = 0; j < visited[i].length; j++) {
-//					System.out.print(Arrays.toString(visited[i][j]));
-//				}
-//				System.out.println();
-//			}
 		} // while문
 		System.out.println(days);
 	}
@@ -123,7 +113,6 @@ public class Main {
 		Queue<int[]> queue = new LinkedList<>();
 		queue.add(new int[] { r, c });
 		visited[r][c] = queue.peek();
-//        visited[r][c] = find(visited[r][c]);
 		while (!queue.isEmpty()) {
 			int now[] = queue.poll();
 			for (int i = 0; i < dr.length; i++) {
@@ -146,8 +135,8 @@ public class Main {
 		}
 		if (checkSame(a, visited[a[0]][a[1]])) {
 			return a;
-		} // 대표 노드와 해당 좌표가 같을 때 그냥 리턴
-			// 다를 땐 대표노드 찾아서 리턴
+		}
+
 		return visited[a[0]][a[1]] = find(visited[a[0]][a[1]]);
 	}
 
@@ -162,7 +151,6 @@ public class Main {
 	}
 
 	static boolean checkSame(int[] a, int[] b) {
-		// b ㅇ받아주는게 이상한ㅁ 널포인터
 		return (a[0] == b[0] && a[1] == b[1]);
-	} // 두 좌표가 같을 때 true 리턴
+	} // 두 좌표가 같을 때 true 리턴 - 두 좌표의 대표가 동일한지 찾는데 쓰임
 }
