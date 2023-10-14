@@ -77,7 +77,7 @@ public class Main {
 						visited[nr][nc] = visited[now[0]][now[1]] + 1;
 						queue.add(new int[] { nr, nc });
 					} else if (map[now[0]][now[1]] == 'F' && map[nr][nc] == 'J'
-							&& visited[nr][nc] == visited[now[0]][now[1]]) {
+							&& visited[nr][nc] == 0) {
 						map[nr][nc] = 'F';
 					}
 				}
