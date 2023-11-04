@@ -16,8 +16,6 @@ public class Main {
 	// ud : {상, 북, 하, 남}
 	static int[][] lrud = new int[][] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 } };
 
-	static int[] pos;
-
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
@@ -32,11 +30,6 @@ public class Main {
 
 		map = new int[N][M];
 
-		pos = new int[] { r, c };
-
-//		lrud[0][2] = map[pos[0]][pos[1]];
-//		lrud[1][2] = map[pos[0]][pos[1]];
-
 		// 지도 생성
 		for (int i = 0; i < N; ++i) {
 			st = new StringTokenizer(br.readLine());
@@ -49,8 +42,8 @@ public class Main {
 		for (int i = 0; i < K; ++i) {
 			int input = Integer.parseInt(st.nextToken());
 
-			int nr = pos[0] + dr[input - 1];
-			int nc = pos[1] + dc[input - 1];
+			int nr = r + dr[input - 1];
+			int nc = c + dc[input - 1];
 			if (nr >= 0 && nc >= 0 && nr < N && nc < M) {
 				turn(input);
 
@@ -60,8 +53,8 @@ public class Main {
 					lrud[(input ^ 8) / 11][2] = map[nr][nc];
 					map[nr][nc] = 0;
 				}
-				pos[0] = nr;
-				pos[1] = nc;
+				r = nr;
+				c = nc;
 
 				lrud[((input ^ 8) / 11) ^ 1][0] = lrud[(input ^ 8) / 11][0];
 				lrud[((input ^ 8) / 11) ^ 1][2] = lrud[(input ^ 8) / 11][2];
