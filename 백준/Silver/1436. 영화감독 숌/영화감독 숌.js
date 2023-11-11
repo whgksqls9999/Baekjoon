@@ -5,7 +5,7 @@ input = parseInt(input);
 let cnt = 0;
 let i = 666;
 for (i = 666; cnt != input; ++i){
-    if(i.toString(10).match('666')){
+    if(i.toString(10).includes('666')){
         ++cnt;
     }
 }
