@@ -62,6 +62,7 @@ let tree = new Array(4 * N).fill(BigInt(0));
 
 init(1, 0, N - 1);
 
+let ans =[];
 for (let i = 1 + N; i < N + M + K + 1; ++i) {
     let [a, b, c] = input[i].split(' ').map((element) => {
         return parseInt(element);
@@ -71,6 +72,8 @@ for (let i = 1 + N; i < N + M + K + 1; ++i) {
         c = BigInt(c);
         update(1, 0, N - 1, b - 1, c);
     } else {
-        console.log(query(1, 0, N - 1, b - 1, c - 1).toString(10));
+        ans.push(query(1, 0, N - 1, b - 1, c - 1).toString(10));
     }
 }
+
+console.log(ans.join('\n'));
