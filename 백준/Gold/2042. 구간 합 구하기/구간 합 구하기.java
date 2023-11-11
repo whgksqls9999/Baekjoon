@@ -4,74 +4,70 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main {
-	static int N, M, K, k;
-	static long[] tree;
-	static long sum;
+	static int N, M, K;
+	static long[] arr, tree;
 
-	public static void main(String[] args) throws NumberFormatException, IOException {
+	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		StringBuilder sb = new StringBuilder();
 
-		N = Integer.parseInt(st.nextToken()); // 데이터 수
-		M = Integer.parseInt(st.nextToken()); // 변경 횟수
-		K = Integer.parseInt(st.nextToken()); // 구간합 구하는 횟수
+		// 수의 개수 N
+		N = Integer.parseInt(st.nextToken());
 
-		k = (int) Math.ceil(Math.log(N) / Math.log(2));
-		int size = (int) (Math.pow(2, k) * 2);
+		// 수의 변경이 일어나는 횟수 M
+		M = Integer.parseInt(st.nextToken());
 
-		tree = new long[size];
+		// 구간 합을 구하는 횟수 K
+		K = Integer.parseInt(st.nextToken());
 
-		for (int i = (int) Math.pow(2, k); i < (int) Math.pow(2, k) + N; i++) {
-			tree[i] = Long.parseLong(br.readLine());
+		arr = new long[N + 1];
+		tree = new long[N + 1];
+
+		// 값 초기화
+		for (int i = 1; i <= N; i++) {
+			long input = Long.parseLong(br.readLine());
+			update(i, input);
+			arr[i] = input;
 		}
-		setSum();
 
 		for (int i = 0; i < M + K; i++) {
 			st = new StringTokenizer(br.readLine());
-			int a = Integer.parseInt(st.nextToken());
+			int type = Integer.parseInt(st.nextToken());
+
 			int b = Integer.parseInt(st.nextToken());
-			long c = Long.parseLong(st.nextToken());
 
-			sum = 0;
-			if (a == 1) { // b번째 수를 c로 바꿈
-				int aIdx = b + (int) Math.pow(2, k) - 1;
-				long diff = c - tree[aIdx];
-				change(aIdx, diff);
-			} else { // b번째 수부터 c번째 수의 합 출력
-				int bIdx = b + (int) Math.pow(2, k) - 1;
-				int cIdx = (int) c + (int) Math.pow(2, k) - 1;
-				sum(bIdx, cIdx);
+			if (type == 1) {
+				long c = Long.parseLong(st.nextToken());
+				update(b, c - arr[b]);
+				arr[b] = c;
+			} else {
+				int c = Integer.parseInt(st.nextToken());
+				sb.append(intervalSum(b, c)).append("\n");
 			}
-		}
 
+		} // for
+
+		System.out.println(sb);
 	} // main
 
-	static void setSum() {
-		for (int i = tree.length - 1; i > 1; i--) {
-			tree[i / 2] += tree[i];
+	static long prefixSum(int i) {
+		long result = 0;
+		while (i > 0) {
+			result += tree[i];
+			i -= (i & -i);
+		}
+		return result;
+	}
+
+	static void update(int i, long val) {
+		while (i <= N) {
+			tree[i] += val;
+			i += (i & -i);
 		}
 	}
 
-	static void change(int a, long b) {
-		if (a == 0) {
-			return;
-		}
-		tree[a] += b;
-		change(a / 2, b);
-	}
-
-	static void sum(int a, int b) {
-		if (a > b) {
-			System.out.println(sum);
-			return;
-		}
-		if (a % 2 == 1) {
-			sum += tree[a];
-		}
-		if (b % 2 == 0) {
-			sum += tree[b];
-		}
-		sum((a + 1) / 2, (b - 1) / 2);
+	static long intervalSum(int start, int end) {
+		return prefixSum(end) - prefixSum(start - 1);
 	}
 }
