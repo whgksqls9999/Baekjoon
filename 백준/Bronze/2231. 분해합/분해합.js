@@ -1,23 +1,20 @@
-let input = require('fs').readFileSync('/dev/stdin').toString();
+const input = require('fs').readFileSync('/dev/stdin').toString().trim().split('\n');
+N = input[0];
+NLen = N.length;
 
-let N = input;
+console.log(solution(+N, NLen));
 
-console.log(solution(N));
-
-function solution(N){
-    let length = N.length;
-
+function solution(N, NLen){
     let iLen = 0;
     let tmp = 0;
-    for (let i = N-9*N.length; i <= 1000000; ++i){
+    for (let i = N-9*NLen; i < N; i++){
         iLen = String(i).length;
         tmp = i;
-        for (let j = 0; j < iLen; ++j){
-            tmp += Number(String(i)[j]);
+        for(let j = 0; j < iLen; j++){
+            tmp += Number(String(i)[j])
         }
-
         if (tmp == N){
-            return i;
+            return i
         }
     }
     return 0;
