@@ -9,7 +9,7 @@ function solution(N){
 
     let iLen = 0;
     let tmp = 0;
-    for (let i = 1; i <= 1000000; ++i){
+    for (let i = N-9*N.length; i <= 1000000; ++i){
         iLen = String(i).length;
         tmp = i;
         for (let j = 0; j < iLen; ++j){
