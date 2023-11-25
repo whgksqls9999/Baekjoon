@@ -1,23 +1,20 @@
-let arr = Array(10001).fill(0);
-let check = Array(10001).fill(false);
-for (let i = 1; i <= 9972; ++i){
-    arr[i] = i;
-    
-    let num = i;
-    let stringI = i.toString().split('');
-    stringI.forEach((element) => {
-        num += Number(element);
-    })
+const set = new Set();
+const answer = [];
 
-    if(num >= 10001) continue;
-    check[num] = true;
+for (let i = 0; i <= 10000; ++i){
+    let num = 0;
+    let numStr = i.toString();
+
+    for (let j = 0; j < numStr.length; ++j){
+        num += Number(numStr[j]);
+    }
+
+    set.add(i+num);
 }
-
-let answer = '';
 
 for (let i = 1; i <= 10000; ++i){
-    if (check[i]) continue;
-    answer += i+"\n";
+    if(set.has(i)) continue;
+    answer.push(i);
 }
 
-console.log(answer);
+console.log(answer.join('\n'));
