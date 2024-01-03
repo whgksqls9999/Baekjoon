@@ -1,4 +1,4 @@
-const input = require('fs').readFileSync('/dev/stdin').toString();
+const input = require('fs').readFileSync('/dev/stdin').toString().trim().split('\n');
 
 const N = Number(input[0]);
 const dp = Array(N+1).fill(0);
@@ -6,6 +6,7 @@ const dp = Array(N+1).fill(0);
 dp[0] = BigInt(0);
 dp[1] = BigInt(1);
 dp[2] = BigInt(1);
+
 
 (function solution(){
     for (let i = 3; i <= N; ++i){
