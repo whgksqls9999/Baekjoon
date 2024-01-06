@@ -14,7 +14,7 @@ const MOD = 1_000_000_007;
 (function solution() {
   for (let i = 3; i <= N; ++i) {
     let tmp = A + B;
-    if (tmp >= MOD) tmp %= MOD;
+    if (tmp >= MOD) tmp -= MOD;
     A = B;
     B = tmp;
   }
