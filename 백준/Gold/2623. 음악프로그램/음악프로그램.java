@@ -39,7 +39,7 @@ public class Main {
 		System.out.print(solution());
 	}
 
-	public static StringBuilder solution() {
+	public static String solution() {
 		StringBuilder answer = new StringBuilder();
 		PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> a - b);
 		int cntCheck = 0;
@@ -65,7 +65,6 @@ public class Main {
 			}
 		}
 
-		return cntCheck == N ? answer : answer.replace(0, N, "0");
+		return cntCheck == N ? answer.toString() : "0";
 	}
-
 }
