@@ -1,8 +1,9 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -41,26 +42,25 @@ public class Main {
 
 	public static String solution() {
 		StringBuilder answer = new StringBuilder();
-		PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> a - b);
+		Queue<Integer> queue = new ArrayDeque<>();
 		int cntCheck = 0;
 
 		for (int i = 1; i < indegree.length; ++i) {
 			if (indegree[i] == 0) {
-				pq.add(i);
+				queue.add(i);
 				answer.append(i).append("\n");
-				++cntCheck;
 			}
 		}
 
-		while (!pq.isEmpty()) {
-			int cur = pq.poll();
+		while (!queue.isEmpty()) {
+			int cur = queue.poll();
+			++cntCheck;
 
 			for (int i : nodes[cur]) {
 				--indegree[i];
 				if (indegree[i] == 0) {
-					pq.add(i);
+					queue.add(i);
 					answer.append(i).append("\n");
-					++cntCheck;
 				}
 			}
 		}
