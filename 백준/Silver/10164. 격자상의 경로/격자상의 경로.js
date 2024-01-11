@@ -10,8 +10,11 @@ const input = require("fs")
     .fill(0)
     .map(() => Array(M + 1).fill(0));
 
-  let r = Math.floor(K / M) + 1;
-  let c = K % M;
+  // let r = Math.floor(K / M) + 1;
+  // let c = K % M;
+
+  let r = Math.ceil(K / M);
+  let c = K % M === 0 ? M : K % M;
 
   if (K === 0) {
     [r, c] = [N, M];
