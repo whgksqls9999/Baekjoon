@@ -24,28 +24,22 @@ public class Main {
 		}
 
 		for (int i = 1; i <= arr.length; i++) {
-			DFS(arr, new ArrayList<Integer>(), 0, i, S);
+			DFS(arr, 0, 0, i, S);
 		}
 		System.out.println(answer);
 	}
 
-	public static void DFS(int[] arr, List<Integer> sum, int cur, int limit, int S) {
+	public static void DFS(int[] arr, int sum, int cur, int limit, int S) {
 		if (cur == limit) {
-			int result = 0;
-			for (int i : sum) {
-				result += i;
-			}
-
-			if (result == S) {
+			if (sum == S) {
 				answer++;
 			}
 			return;
 		}
 
 		for (int i = cur; i < arr.length; i++) {
-			sum.add(arr[i]);
-			DFS(arr, sum, i + 1, limit, S);
-			sum.remove(sum.size() - 1);
+			DFS(arr, sum + arr[i], i + 1, limit, S);
+
 		}
 	}
 }
