@@ -4,12 +4,13 @@ class Solution {
     public int solution(int n, int[][] wires) {
         int answer = Integer.MAX_VALUE;
         
-        // 인접 리스트
+        // 인접 리스트 생성
         List<Integer>[] nodes = new ArrayList[n + 1];
         for (int i = 1; i < nodes.length; i++){
             nodes[i] = new ArrayList<>();
         }
         
+        // 와이어 연결
         for (int[] wire : wires){
             nodes[wire[0]].add(wire[1]);
             nodes[wire[1]].add(wire[0]);
@@ -17,7 +18,7 @@ class Solution {
         
         
         for (int[] wire : wires){
-            // 와이어 하나 골라서 연결 끊기
+            // 와이어 하나 상호 연결 끊기
             for (int i = 0; i < nodes[wire[0]].size(); i++){
                 if (nodes[wire[0]].get(i) == wire[1]){
                     nodes[wire[0]].remove(i);
@@ -25,6 +26,7 @@ class Solution {
                 }
             }
             
+            // 와이어 하나 상호 연결 끊기
             for (int i = 0; i < nodes[wire[1]].size(); i++){
                 if (nodes[wire[1]].get(i) == wire[0]){
                     nodes[wire[1]].remove(i);
@@ -46,6 +48,7 @@ class Solution {
             nodes[wire[0]].add(wire[1]);
             nodes[wire[1]].add(wire[0]);
             
+            // 리스트의 사이즈가 2가 아닐때는 전력망 네트워크가 2분할 되지 않은 것이므로 continue
             if (list.size() != 2) continue;
             
             answer = Math.min(answer, Math.abs(list.get(1) - list.get(0)));
