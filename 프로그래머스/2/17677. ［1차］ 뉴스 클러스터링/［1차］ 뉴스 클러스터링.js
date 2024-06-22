@@ -2,7 +2,6 @@ function solution(str1, str2) {
     var answer = 0;
     
     const [set, arr] = tokenizingWord(str1, str2);
-    console.log(set, arr);
     
     answer = arr !== 0 ? Math.floor(set / arr * 65536) : 65536;
     
