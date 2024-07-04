@@ -23,27 +23,28 @@ function solution() {
 			b = Math.min(b, cur[1]);
 		}
 		arr.sort((a, b) => a[0] - b[0]);
-		let resultA = 1;
-		let min = arr[0][1];
-		for (let i = 1; i < arr.length; i++) {
+		let resultA = 0;
+		let min = N + 1;
+		for (let i = 0; i < arr.length; i++) {
 			if (arr[i][1] < min) {
 				resultA++;
 			}
 			min = Math.min(min, arr[i][1]);
 		}
 
-		arr.sort((a, b) => a[1] - b[1]);
+		// arr.sort((a, b) => a[1] - b[1]);
 
-		let resultB = 1;
-		min = arr[0][0];
-		for (let i = 1; i < arr.length; i++) {
-			if (arr[i][0] < min) {
-				resultB++;
-			}
-			min = Math.min(min, arr[i][1]);
-		}
+		// let resultB = 1;
+		// min = arr[0][0];
+		// for (let i = 1; i < arr.length; i++) {
+		// 	if (arr[i][0] < min) {
+		// 		resultB++;
+		// 	}
+		// 	min = Math.min(min, arr[i][1]);
+		// }
 
-		answer += Math.max(resultA, resultB) + '\n';
+		// answer += Math.max(resultA, resultB) + '\n';
+		answer += resultA + '\n';
 	}
 	console.log(answer.trim());
 }
