@@ -8,7 +8,7 @@ let I = 0;
 let T = +input[I++];
 
 function solution() {
-	let answer = '';
+	let answer = [];
 
 	while (T-- > 0) {
 		let N = +input[I++];
@@ -44,9 +44,9 @@ function solution() {
 		// }
 
 		// answer += Math.max(resultA, resultB) + '\n';
-		answer += resultA + '\n';
+		answer.push(resultA);
 	}
-	console.log(answer.trim());
+	console.log(answer.join('\n'));
 }
 
 solution();
