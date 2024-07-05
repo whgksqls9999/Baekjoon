@@ -31,20 +31,13 @@ function solution() {
 		}
 	}
 
-	const mapB = {};
 	for (let i = 0; i < B.length - 1; i++) {
 		for (let j = i + 1; j < B.length; j++) {
 			let cur = B[j] - B[i];
 
 			if (!mapA[T - cur]) continue;
-			mapB[cur] = (mapB[cur] ?? 0) + 1;
+			answer += mapA[T - cur];
 		}
-	}
-
-	for (let key in mapA) {
-		if (!mapB[T - +key]) continue;
-
-		answer += mapA[+key] * mapB[T - +key];
 	}
 
 	console.log(answer);
