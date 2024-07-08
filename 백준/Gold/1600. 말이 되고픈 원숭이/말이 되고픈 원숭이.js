@@ -6,27 +6,19 @@ const input = require('fs')
 
 class Queue {
 	constructor() {
-		this.storage = {};
-		this.front = -1;
-		this.rear = -1;
+		this.storage = [];
 	}
 
 	isEmpty() {
-		return this.front === this.rear;
+		return this.storage.length === 0;
 	}
 
 	push(value) {
-		this.storage[++this.rear] = value;
+		this.storage.push(value);
 	}
 
 	poll() {
-		if (this.isEmpty()) return null;
-		return this.storage[++this.front];
-	}
-
-	peek() {
-		if (this.isEmpty()) return null;
-		return this.storage[this.front + 1];
+		return this.storage.shift();
 	}
 }
 
@@ -63,8 +55,8 @@ function BFS(r, c) {
 		}
 
 		for (let i = 0; i < dr.length; i++) {
-			let nr = r + dr[i];
-			let nc = c + dc[i];
+			const nr = r + dr[i];
+			const nc = c + dc[i];
 
 			if (nr >= 0 && nr < N && nc >= 0 && nc < M) {
 				if (visited[limit][nr][nc] || arr[nr][nc] === 1) continue;
@@ -77,8 +69,8 @@ function BFS(r, c) {
 		if (limit === 0) continue;
 
 		for (let i = 0; i < hdr.length; i++) {
-			let nr = r + hdr[i];
-			let nc = c + hdc[i];
+			const nr = r + hdr[i];
+			const nc = c + hdc[i];
 
 			if (nr >= 0 && nr < N && nc >= 0 && nc < M) {
 				if (visited[limit - 1][nr][nc] || arr[nr][nc] === 1) continue;
