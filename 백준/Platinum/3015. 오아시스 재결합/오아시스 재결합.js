@@ -10,7 +10,7 @@ function solution() {
 	let arr = input.slice(idx).map((it) => [+it, 1]);
 
 	let stack = [];
-	let cnt = BigInt(0);
+	let cnt = 0;
 
 	arr.forEach((it) => {
 		let peek = stack[stack.length - 1];
@@ -35,7 +35,7 @@ function solution() {
 				if (peek < max) {
 					stack.pop();
 				} else if (peek === max) {
-					cnt += BigInt(num);
+					cnt += num;
 					if (max === curIt) {
 						curNum += num;
 						stack.pop();
@@ -44,16 +44,16 @@ function solution() {
 					}
 				} else if (peek > curIt) {
 					cnt++;
-					// cnt += BigInt(num);
+					// cnt += (num);
 					break;
 				} else if (peek === curIt) {
-					cnt += BigInt(num);
+					cnt += num;
 					curNum += num;
 					max = peek;
 					stack.pop();
 				} else if (peek < curIt) {
 					max = Math.max(max, peek);
-					cnt += BigInt(num);
+					cnt += num;
 					stack.pop();
 				}
 
