@@ -14,16 +14,22 @@ function solution() {
 	while (l < r) {
 		let mid = Math.floor((l + r) / 2);
 
+		let check = false;
+
 		let set = new Set();
 		for (let i = 0; i < M; i++) {
 			let cur = '';
 			for (let j = mid + 1; j < N; j++) {
 				cur += arr[j][i];
 			}
+			if (set.has(cur)) {
+				check = true;
+				break;
+			}
 			set.add(cur);
 		}
 
-		if (set.size < M) {
+		if (check) {
 			r = mid;
 		} else {
 			l = mid + 1;
