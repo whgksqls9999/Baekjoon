@@ -79,6 +79,7 @@ function dfs(cctvs, idx, limit, N, M){
     }
     
     for (let i = 0; i < 4; i++){
+        if (i > 0 && cctvs[idx].type === 5) continue;
         cctvs[idx].dir = i;
         dfs(cctvs, idx+1, limit, N, M);
     }
