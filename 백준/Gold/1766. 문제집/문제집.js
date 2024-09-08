@@ -2,58 +2,56 @@ const input = require('fs').readFileSync(0).toString().trim().split('\n');
 
 class PriorityQueue {
     constructor(){
-        this.storage = [];
+        this.storage = [null];
     }
 
     isEmpty(){
-        return this.storage.length === 0;
+        return this.storage.length === 1;
     }
 
     deQueue(){
         if (this.isEmpty()) return null;
-
-        const result = this.storage[0];
+        
+        const result = this.storage[1];
         const end = this.storage.pop();
-        if (!this.isEmpty()) {
-            this.storage[0] = end;
+        if (!this.isEmpty()){
+            this.storage[1] = end;
             this.heapifyDown();
         }
         return result;
     }
 
     heapifyDown(){
-        let parentIdx = 0;
-        const length = this.storage.length;
+        let parentIdx = 1;
+        let childIdx = parentIdx * 2;
+        let length = this.storage.length;
+        if (childIdx + 1 < length && this.storage[childIdx + 1] < this.storage[childIdx]){
+            childIdx++;
+        }
+        
+        while(childIdx < length && this.storage[parentIdx] > this.storage[childIdx]){
 
-        while (true) {
-            let leftChildIdx = 2 * parentIdx + 1;
-            let rightChildIdx = 2 * parentIdx + 2;
-            let swapIdx = parentIdx;
+            [this.storage[parentIdx], this.storage[childIdx]] = [this.storage[childIdx], this.storage[parentIdx]]
 
-            if (leftChildIdx < length && this.storage[leftChildIdx] < this.storage[swapIdx]) {
-                swapIdx = leftChildIdx;
+            parentIdx = childIdx;
+            childIdx = parentIdx * 2;
+
+            if (childIdx + 1 < length && this.storage[childIdx + 1] < this.storage[childIdx]){
+                childIdx++;
             }
-
-            if (rightChildIdx < length && this.storage[rightChildIdx] < this.storage[swapIdx]) {
-                swapIdx = rightChildIdx;
-            }
-
-            if (swapIdx === parentIdx) break;
-
-            [this.storage[parentIdx], this.storage[swapIdx]] = [this.storage[swapIdx], this.storage[parentIdx]];
-            parentIdx = swapIdx;
         }
     }
 
     heapifyUp(){
-        let childIdx = this.storage.length - 1;
-        let parentIdx = Math.floor((childIdx - 1) / 2);
+        let length = this.storage.length;
+        let childIdx = length - 1;
+        let parentIdx = Math.floor(childIdx / 2);
 
-        while (childIdx > 0 && this.storage[childIdx] < this.storage[parentIdx]) {
-            [this.storage[childIdx], this.storage[parentIdx]] = [this.storage[parentIdx], this.storage[childIdx]];
+        while(parentIdx > 0 && this.storage[parentIdx] > this.storage[childIdx]){
+            [this.storage[parentIdx], this.storage[childIdx]] = [this.storage[childIdx], this.storage[parentIdx]]
 
             childIdx = parentIdx;
-            parentIdx = Math.floor((childIdx - 1) / 2);
+            parentIdx = Math.floor(childIdx / 2);
         }
     }
 
