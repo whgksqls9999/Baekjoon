@@ -110,10 +110,10 @@ function solution() {
 
     if (pre[2001] === -1) break;
 
-    let min_flow = Number.MAX_SAFE_INTEGER;
-    for (let node = 2001; node !== 0; node = pre[node]){
-      min_flow = Math.min(min_flow, capacity[pre[node]][node] - flow[pre[node]][node]);
-    }
+    let min_flow = 1;
+    // for (let node = 2001; node !== 0; node = pre[node]){
+    //   min_flow = Math.min(min_flow, capacity[pre[node]][node] - flow[pre[node]][node]);
+    // }
     
     for (let node = 2001; node !== 0; node = pre[node]){
       flow[pre[node]][node] += min_flow;
