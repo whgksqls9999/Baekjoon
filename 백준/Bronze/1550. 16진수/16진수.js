@@ -9,17 +9,21 @@ function solution() {
 	let answer = 0;
 	const N = input[idx++].trim();
 
-	const trans = {
-		A: 10,
-		B: 11,
-		C: 12,
-		D: 13,
-		E: 14,
-		F: 15,
-	};
+	function trans(arg) {
+		const trans = {
+			A: 10,
+			B: 11,
+			C: 12,
+			D: 13,
+			E: 14,
+			F: 15,
+		};
+
+		return trans[arg];
+	}
 
 	for (let i = 0; i < N.length; i++) {
-		let cur = trans[N[i]] ?? N[i];
+		let cur = trans([N[i]]) ?? N[i];
 		answer += Math.pow(16, N.length - i - 1) * cur;
 	}
 
