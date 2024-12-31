@@ -19,13 +19,13 @@ function solution() {
 		map.set(String.fromCodePoint(i), false);
 	}
 
-	const essential = [
+	const essential = new Set([
 		a,
 		'n'.codePointAt(0),
 		't'.codePointAt(0),
 		'i'.codePointAt(0),
 		'c'.codePointAt(0),
-	];
+	]);
 
 	function select(teached_words, start_point) {
 		if (teached_words === M) {
@@ -41,7 +41,7 @@ function solution() {
 		}
 
 		for (let i = start_point; i <= z; i++) {
-			if (essential.some((it) => it === i)) continue;
+			if (essential.has(i)) continue;
 
 			if (map.get(String.fromCodePoint(i)) === false) {
 				map.set(String.fromCodePoint(i), true);
