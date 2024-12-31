@@ -4,61 +4,60 @@ const input = require('fs')
 	.trim()
 	.split('\n');
 
+function getBit(char) {
+	switch (typeof char) {
+		case 'string':
+			return 1 << (char.codePointAt(0) - 'a'.codePointAt(0));
+		case 'number':
+			return 1 << (char - 'a'.codePointAt(0));
+	}
+}
+
 function solution() {
 	let idx = 0;
 	let answer = 0;
 
 	const [N, M] = input[idx++].split(' ').map(Number);
-	const words = input.slice(idx).map((it) => it.trim());
+	if (M < 5) return 0;
 
-	const map = new Map();
+	const words = input.slice(idx).map((it) => {
+		let word = it.trim();
+		let res = 0;
+		for (const char of word) {
+			res |= getBit(char);
+		}
+		return res;
+	});
 
-	let a = 'a'.codePointAt(0);
-	let z = 'z'.codePointAt(0);
-	for (let i = a; i <= z; i++) {
-		map.set(String.fromCodePoint(i), false);
-	}
+	let base_teached_word = 0;
+	base_teached_word |= getBit('a');
+	base_teached_word |= getBit('n');
+	base_teached_word |= getBit('t');
+	base_teached_word |= getBit('i');
+	base_teached_word |= getBit('c');
 
-	const essential = new Set([
-		a,
-		'n'.codePointAt(0),
-		't'.codePointAt(0),
-		'i'.codePointAt(0),
-		'c'.codePointAt(0),
-	]);
-
-	function select(teached_words, start_point) {
-		if (teached_words === M) {
+	function select(teached_word, depth, idx, M) {
+		if (depth === M) {
 			let res = 0;
-			outer: for (const word of words) {
-				for (const char of word) {
-					if (map.get(char) === false) continue outer;
+			for (const word of words) {
+				if ((teached_word & word) === word) {
+					res++;
 				}
-				res++;
 			}
 			answer = Math.max(answer, res);
 			return;
 		}
 
-		for (let i = start_point; i <= z; i++) {
-			if (essential.has(i)) continue;
-
-			if (map.get(String.fromCodePoint(i)) === false) {
-				map.set(String.fromCodePoint(i), true);
-				select(teached_words + 1, i + 1);
-				map.set(String.fromCodePoint(i), false);
+		for (let start = idx, end = 'z'.codePointAt(0); start <= end; start++) {
+			const cur = getBit(start);
+			if ((cur & base_teached_word) >= 1) continue;
+			if ((cur & teached_word) !== cur) {
+				select(teached_word | cur, depth + 1, start + 1, M);
 			}
 		}
 	}
 
-	if (M < 5) {
-		return 0;
-	} else {
-		essential.forEach((it) => {
-			map.set(String.fromCodePoint(it), true);
-		});
-		select(5, a);
-	}
+	select(base_teached_word, 5, 'a'.codePointAt(0), M);
 
 	return answer;
 }
