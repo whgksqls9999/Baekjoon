@@ -16,9 +16,11 @@ function solution() {
 	const arr = Array.from(map).sort((a, b) => a[1] - b[1]);
 
 	const NUM = 1.618;
-	for (let i = 0; i < arr.length - 1; i++) {
+	outer: for (let i = 0; i < arr.length - 1; i++) {
 		for (let j = i + 1; j < arr.length; j++) {
-			if (Math.floor(arr[i][1] * NUM) === arr[j][1]) return 'Delicious!';
+			const result = Math.floor(arr[i][1] * NUM);
+			if (result === arr[j][1]) return 'Delicious!';
+			// if (result > arr[j][1]) continue outer;
 		}
 	}
 
