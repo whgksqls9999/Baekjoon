@@ -1,8 +1,5 @@
-const input = require('fs')
-	.readFileSync(0)
-	.toString()
-	.trim()
-	.split('\n');
+const file = process.platform === 'linux' ? '/dev/stdin' : 'example.txt';
+const input = require('fs').readFileSync(file).toString().trim().split('\n');
 
 function solution() {
 	const N = Number(input[0]);
