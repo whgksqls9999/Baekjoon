@@ -1,17 +1,15 @@
 const file = process.platform === 'linux' ? '/dev/stdin' : 'example.txt';
 const input = require('fs').readFileSync(file).toString().trim().split('\n');
 
-async function solution() {
+function solution() {
 	let idx = 0;
 	const [N, score, P] = input[idx++].split(' ').map(Number);
 	const rank = input[idx] ? input[idx].split(' ').map(Number) : [];
 
-	const [closestLower, expectedRank] = await Promise.all([
+	const [closestLower, expectedRank] = [
 		findClosestLower(rank, score),
 		findSameScore(rank, score),
-	]);
-
-	// console.log(closestLower, expectedRank);
+	];
 
 	if (closestLower === -1) {
 		if (rank.length + 1 > P) {
@@ -28,7 +26,7 @@ async function solution() {
 	}
 }
 
-async function findSameScore(rank, score) {
+function findSameScore(rank, score) {
 	let idx = 0;
 	for (; idx < rank.length; idx++) {
 		if (rank[idx] === score) {
@@ -38,7 +36,7 @@ async function findSameScore(rank, score) {
 	return -1;
 }
 
-async function findClosestLower(rank, score) {
+function findClosestLower(rank, score) {
 	let idx = 0;
 	for (; idx < rank.length; idx++) {
 		if (rank[idx] < score) {
@@ -48,6 +46,4 @@ async function findClosestLower(rank, score) {
 	return -1;
 }
 
-(async function solve() {
-	console.log(await solution());
-})();
+console.log(solution());
