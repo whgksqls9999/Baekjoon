@@ -23,34 +23,10 @@ function solution() {
 }
 
 function getLeafNodeCount(nodes) {
-	const visited = Array(nodes.length).fill(false);
-	let isFromLeaf = false;
 	let leafNodeCount = 0;
 
-	dfs(1);
-
-	// const stack = [];
-	// stack.push(1);
-
-	// while (true) {
-	// 	let cur = stack.pop();
-	// 	visited[cur] = true;
-	// }
-
-	function dfs(nodeIndex) {
-		visited[nodeIndex] = true;
-
-		for (const next of nodes[nodeIndex]) {
-			if (!visited[next]) {
-				isFromLeaf = false;
-				dfs(next);
-			}
-		}
-
-		if (!isFromLeaf) {
-			isFromLeaf = true;
-			leafNodeCount += 1;
-		}
+	for (let i = 2; i <= nodes.length - 1; i++) {
+		if (nodes[i].length === 1) leafNodeCount++;
 	}
 
 	return leafNodeCount;
