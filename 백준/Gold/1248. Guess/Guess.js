@@ -52,15 +52,13 @@ function select(array, selected, depth, N, prefixSum) {
 }
 
 function check(array, selected, depth, prefixSum) {
-	// for (let i = 0; i <= depth; i++) {
-	// 	let sum = 0;
 	for (let j = 0; j <= depth; j++) {
 		const sum = prefixSum[depth] - (prefixSum[j - 1] ?? 0);
 		const sign = array[j][depth];
 		const handler = getHandler(sign);
 		if (!handler(sum)) return { done: false };
 	}
-	// }
+
 	return { done: true, value: selected };
 }
 
